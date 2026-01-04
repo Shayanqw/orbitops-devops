@@ -1,4 +1,4 @@
-# OrbitOps — DevOps / Platform Showcase (Junior)
+# OrbitOps — DevOps / Platform 
 
 A portfolio-grade **end-to-end DevOps project** demonstrating how to ship and operate a small web service:
 **tests → container build → CI → local compose → Kubernetes deployment → smoke checks**.
