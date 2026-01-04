@@ -3,7 +3,8 @@ FROM python:3.11-slim AS builder
 
 WORKDIR /build
 COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip  && pip wheel --no-cache-dir --wheel-dir /wheels -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip \
+ && pip wheel --no-cache-dir --wheel-dir /wheels -r requirements.txt
 
 FROM python:3.11-slim AS runtime
 
@@ -12,7 +13,9 @@ RUN useradd -m -u 10001 appuser
 WORKDIR /app
 
 COPY --from=builder /wheels /wheels
-RUN pip install --no-cache-dir --no-index --find-links=/wheels -r /wheels/requirements.txt  && rm -rf /wheels
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir --no-index --find-links=/wheels -r /tmp/requirements.txt \
+ && rm -rf /wheels /tmp/requirements.txt
 
 COPY app ./app
 ENV PYTHONUNBUFFERED=1
